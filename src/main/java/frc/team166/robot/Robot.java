@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team166.chopshoplib.sensors.Lidar;
 import frc.team166.robot.commands.ExampleCommand;
 import frc.team166.robot.subsystems.Drive;
 import frc.team166.robot.subsystems.ExampleSubsystem;

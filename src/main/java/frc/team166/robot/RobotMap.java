@@ -7,6 +7,8 @@
 
 package frc.team166.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,29 +16,43 @@ package frc.team166.robot;
  * floating around.
  */
 public class RobotMap {
-    public static class CAN {
-        //changes motor ports into integers
-        public final static int frontright = 1;
-        public final static int frontleft = 3;
-        public final static int backright = 4;
-        public final static int backleft = 2;
-    }
 
-    public static class Controller {
-        //changes controller ports into integers
-        public final static int leftcontrol = 0;
-        public final static int rightcontrol = 1;
-        public final static int Xboxcontrol = 2;
-    }
+	public static class CAN {
+		public final static int FrontRight = 1;
+		public final static int FrontLeft = 3;
+		public final static int BackLeft = 2;
+		public final static int BackRight = 4;
 
-    public static class AnalogInputs {
-        //changes input ports into integers
-        public final static int tempestgyro = 1;
-    }
+	}
 
-    public static class Buttons {
-        //changes button ports into integers
-        public final static int XboxAbutton = 1;
-        public final static int XboxXbutton = 3;
-    }
+	public static class Controller {
+		public final static int DriveJoyStickPortLeft = 0;
+		public final static int DriveJoyStickPortRight = 1;
+		public final static int XboxController = 2;
+	}
+
+	public static class analogInputs {
+		public final static int myGyroPort = 1;
+	}
+
+	public static class joystickButtons {
+
+		public static int driveStraightTrigger = 1;
+		public static int kTop = 2;
+
+	}
+
+	public static class xboxButtons {
+		public static int xboxAbutton = 1;
+		public static int xboxXbutton = 2;
+
+	}
+
+	public static class Encoders {
+		public final static int LeftA = 0;
+		public final static int RightA = 2;
+		public final static int LeftB = 1;
+		public final static int RightB = 3;
+
+	}
 }

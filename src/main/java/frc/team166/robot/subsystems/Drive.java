@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team166.robot.Robot;
 import frc.team166.robot.RobotMap;
 import frc.team166.chopshoplib.commands.SubsystemCommand;
+import frc.team166.chopshoplib.sensors.Lidar;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -26,15 +28,16 @@ import frc.team166.chopshoplib.commands.SubsystemCommand;
 public class Drive extends Subsystem {
 
     //defines the gyro
-    AnalogGyro tempestGyro = new AnalogGyro(RobotMap.AnalogInputs.tempestgyro);
+    AnalogGyro tempestGyro = new AnalogGyro(RobotMap.analogInputs.myGyroPort);
     //defines the left motors as motors and combines the left motors into one motor
-    WPI_TalonSRX m_rearleft = new WPI_TalonSRX(RobotMap.CAN.backleft);
-    WPI_TalonSRX m_frontleft = new WPI_TalonSRX(RobotMap.CAN.frontleft);
+    WPI_TalonSRX m_rearleft = new WPI_TalonSRX(RobotMap.CAN.BackLeft);
+    WPI_TalonSRX m_frontleft = new WPI_TalonSRX(RobotMap.CAN.FrontLeft);
     SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontleft, m_rearleft);
     //defines the right motors as motors and combines the left motors into one motor
-    WPI_TalonSRX m_rearright = new WPI_TalonSRX(RobotMap.CAN.backright);
-    WPI_TalonSRX m_frontright = new WPI_TalonSRX(RobotMap.CAN.frontright);
+    WPI_TalonSRX m_rearright = new WPI_TalonSRX(RobotMap.CAN.BackRight);
+    WPI_TalonSRX m_frontright = new WPI_TalonSRX(RobotMap.CAN.FrontRight);
     SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontright, m_rearright);
+    Lidar myLidar = new Lidar(0x10);
 
     /**defines the left and right motors defined above into a differential drive
      * that can be used for arcade and tank drive, amung other things
@@ -78,10 +81,10 @@ public class Drive extends Subsystem {
 
             @Override
             protected void execute() {
-                m_drive.arcadeDrive(
-                        Robot.m_oi.xBoxTempest.getTriggerAxis(Hand.kRight)
-                                - Robot.m_oi.xBoxTempest.getTriggerAxis(Hand.kLeft),
-                        Robot.m_oi.xBoxTempest.getX(Hand.kLeft));
+                m_drive.arcadeDrive((-Robot.m_oi.leftDriveStick.getY()), Robot.m_oi.rightDriveStick.getX());
+
+                SmartDashboard.putNumber("Distance", myLidar.GetDistance());
+
             }
         });
     }
@@ -112,12 +115,14 @@ public class Drive extends Subsystem {
                 drivePidController.setSetpoint(tempestGyro.getAngle());
                 drivePidController.enable();
                 drivePidController.reset();
+
             }
 
             @Override
             protected void execute() {
                 m_drive.arcadeDrive(Robot.m_oi.xBoxTempest.getTriggerAxis(Hand.kRight)
                         - Robot.m_oi.xBoxTempest.getTriggerAxis(Hand.kLeft), angle);
+
             }
 
             @Override
@@ -129,6 +134,7 @@ public class Drive extends Subsystem {
             protected void end() {
                 drivePidController.disable();
             }
+
         };
     }
 }
